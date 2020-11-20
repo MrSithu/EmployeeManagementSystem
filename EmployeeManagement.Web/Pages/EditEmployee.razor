@@ -1,0 +1,65 @@
+﻿@page "/editemployee/{id}"
+@page "/editemployee"
+@inherits EditEmployeeBase
+
+<EditForm Model="@Employee" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <h3>@PageHeader</h3>
+    <hr />
+    <div class="form-group row">
+        <label for="firstName" class="col-sm-2 col-form-label"> First Name </label>
+        <div class="col-sm-10">
+            <InputText id="firstName" class="form-control" placeholder="First Name" @bind-Value="Employee.FirstName" />
+            <ValidationMessage For="@(()=> Employee.FirstName)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="lastName" class="col-sm-2 col-form-label"> Last Name </label>
+        <div class="col-sm-10">
+            <InputText id="lastName" class="form-control" placeholder="Last Name" @bind-Value="Employee.LastName" />
+            <ValidationMessage For="@(()=> Employee.LastName)" />
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="email" class="col-sm-2 col-form-label"> Email </label>
+        <div class="col-sm-10">
+            <InputText id="email" class="form-control" placeholder="Email" @bind-Value="Employee.Email" />
+            <ValidationMessage For="@(()=> Employee.Email)" />
+        </div>
+    </div>
+
+    <div class="form-group row">
+        <label for="department" class="col-sm-2 col-form-label"> Department </label>
+        <div class="col-sm-10">
+            <InputSelect id="department" @bind-Value="DepartmentId" class="form-control">
+                @foreach (var dept in Departments)
+                {
+                    <option value="@dept.DepartmentId">@dept.DepartmentName</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="gender" class="col-sm-2 col-form-label"> Gender </label>
+        <div class="col-sm-10">
+            <InputSelect id="gender" @bind-Value="Employee.Gender" class="form-control">
+                @foreach (var gender in Enum.GetValues(typeof(Gender)))
+                {
+                    <option value="@gender">@gender</option>
+                }
+            </InputSelect>
+        </div>
+    </div>
+    <div class="form-group row">
+        <label for="dateOfBirth" class="col-sm-2 col-form-label"> Date of Birth </label>
+        <div class="col-sm-10">
+            <InputDate @bind-Value="Employee.DateOfBirth" class="form-control"></InputDate>
+        </div>
+    </div>
+    <button class="btn btn-outline-primary" type="submit">Submit</button>
+    @if (Employee.EmployeeId > 0)
+    {
+        <button class="btn btn-outline-danger" type="submit" @onclick="DeleteClicked">Delete</button>
+
+    }
+</EditForm>
