@@ -16,14 +16,16 @@ namespace EmployeeManagement.Web.Services
         {
             this.httpClient = httpClient;
         }
-        public async Task<Department> GetDepartment(int id)
-        {
-            return await httpClient.GetJsonAsync<Department>($"api/departments/{id}");
-        }
 
         public async Task<IEnumerable<Department>> GetDepartments()
         {
             return await httpClient.GetJsonAsync<Department[]>("api/departments");
         }
+
+        public async Task<Department> GetDepartment(int id)
+        {
+            return await httpClient.GetJsonAsync<Department>($"api/departments/{id}");
+        }
+       
     }
 }

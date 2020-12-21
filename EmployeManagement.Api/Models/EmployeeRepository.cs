@@ -15,23 +15,10 @@ namespace EmployeManagement.Api.Models
         {
             this.appDbContext = appDbContext;
         }
-        public async Task<Employee> AddEmployee(Employee employee)
-        {
-            var result = await appDbContext.Employees.AddAsync(employee);
-            await appDbContext.SaveChangesAsync();
-            return result.Entity;
-        }
 
-        public async Task<Employee> DeleteEmployee(int employeeId)
+        public async Task<IEnumerable<Employee>> GetEmployees()
         {
-            var result = await appDbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
-            if(result != null)
-            {
-                appDbContext.Remove(result);
-                await appDbContext.SaveChangesAsync();
-                return result;
-            }
-            return result;
+            return await appDbContext.Employees.ToListAsync();
         }
 
         public async Task<Employee> GetEmployee(int employeeId)
@@ -40,9 +27,11 @@ namespace EmployeManagement.Api.Models
                 .FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
         }
 
-        public async Task<IEnumerable<Employee>> GetEmployees()
+        public async Task<Employee> AddEmployee(Employee employee)
         {
-            return await appDbContext.Employees.ToListAsync();
+            var result = await appDbContext.Employees.AddAsync(employee);
+            await appDbContext.SaveChangesAsync();
+            return result.Entity;
         }
 
         public async Task<Employee> UpdateEmployee(Employee employee)
@@ -63,6 +52,18 @@ namespace EmployeManagement.Api.Models
                 return result;
             }
             return null;
+        }
+
+        public async Task<Employee> DeleteEmployee(int employeeId)
+        {
+            var result = await appDbContext.Employees.FirstOrDefaultAsync(e => e.EmployeeId == employeeId);
+            if (result != null)
+            {
+                appDbContext.Remove(result);
+                await appDbContext.SaveChangesAsync();
+                return result;
+            }
+            return result;
         }
 
         // To make custom model validation in employeecontroller

@@ -3,7 +3,7 @@
 <div class="card m-1" style="min-width: 18rem; max-width: 30%">
     <div class="card-header">
         <input type="checkbox" @onchange="checkBoxClicked"/>
-        <h3>@Employee.FirstName @Employee.LastName</h3>
+        <span>@Employee.FirstName @Employee.LastName</span>
     </div>
     <img class="card-img-top imageThumbnail" src="@Employee.PhotoPath" />
     @if (ShowFooter)
